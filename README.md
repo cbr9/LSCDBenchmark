@@ -24,6 +24,8 @@ Benchmark for Lexical Semantic Change Detection.
 - input: CSV files in folders for task/one CSV file?
 - output: CSV file with results for all tasks and metrics
 
+===Standard Split===
+
 #### Tasks
 
 lemma level:
