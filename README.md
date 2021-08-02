@@ -24,7 +24,12 @@ Benchmark for Lexical Semantic Change Detection.
 - input: CSV files in folders for task/one CSV file?
 - output: CSV file with results for all tasks and metrics
 
-===Standard Split===
+##### TODO:
+- ===Standard Split===
+- Datasets should provide: dataset1/dev.data, dataset1/eval.data
+- All downloaded datasets should be converted to the same structure
+- converted data should be split into development set and training set
+- Include MCL-WiC, binary labels vs scaled labels
 
 #### Tasks
 
@@ -34,7 +39,12 @@ lemma level:
 - graded change 2 (compare metric)
 
 usage level:
-- choose which level
+- novel sense identification
+
+##### TODO:
+- Accuracy and correlation on WiC 
+- Later WSI
+- 
 
 #### Metrics
 
@@ -44,6 +54,8 @@ usage level:
 | Average Precision | `evaluation/ap.py` | SemCor LSC, SemEval*, DIACR-Ita | - outputs AP (column 3) and random baseline (column 4) |
 | F1/accuracy | | | |
 
+##### TODO:
+- Recall and Precision
 
 #### Sub-Evaluations
 
@@ -52,6 +64,9 @@ usage level:
 - hard graded changes (which are not also binary changes)
 - extended data sets
 - very clean cases
+
+##### TODO:
+- Nothing currently
 
 #### Datasets
 
@@ -71,6 +86,9 @@ usage level:
 | RuShiftEval3 | Russian | RNC 1682-1916 | RNC 1991-2016 | [Dataset](https://github.com/akutuzov/rushifteval_public), [Corpora](https://rusvectores.org/static/corpora/) | |
 | DIACR-Ita | Italian | Unità 1945-1970 | Unità 1990-2014 | [Dataset](https://github.com/diacr-ita/data/tree/master/test), [Corpora](https://github.com/swapUniba/unita/) | |
 | other Italian data set | | | | | |
+
+##### TODO:
+- Nothing
 
 #### Leaderboard
 
