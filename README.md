@@ -17,9 +17,11 @@ Benchmark for Lexical Semantic Change Detection.
 
 ### Usage
 
-- get_data.sh
-- evaluate.sh
-- evaluate.py
+1. make the scripts executable with `chmod 755 *.sh`
+2. get data with `bash -e get_data.sh`
+3. copy predictions in same format as `testsets/` under `predictions/` (provided data can be incomplete, find example under `predictions/`)
+4. evaluate to `results/` with `bash -e evaluate.sh`
+
 
 - input: CSV files in folders for task/one CSV file?
 - output: CSV file with results for all tasks and metrics
@@ -91,6 +93,8 @@ usage level:
 - Nothing
 
 #### Leaderboard
+
+#### Pre-trained models?
 
 Compare [here](https://sapienzanlp.github.io/xl-wsd/)
 

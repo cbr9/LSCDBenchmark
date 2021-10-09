@@ -1,13 +1,25 @@
-
-echo $(tput bold)$BASH_SOURCE$(tput sgr0)
-
-outdir=$dir/graphs
-datadir=$dir/data
-datas=($datadir/*)
+: '
+# Make predictions
+testsets=(testsets/*)
+outdir=predictions
 mkdir -p $outdir
-for data in "${datas[@]}"
+for testset in "${testsets[@]}"
 do
-    echo $data
-    python3 $scriptsdir/judgments2graph.py $data/judgments.csv $data/uses.csv $annotators $outdir/$(basename "$data")
+    #echo $testset
+    datas=($testset/*/*.csv)
+    for data in "${datas[@]}"
+    do
+	echo $data
+	outfile="${data/testsets/$outdir}"
+	#echo $outfile
+	mkdir -p $(dirname "$outfile")
+	python make_prediction.py gold $data $testset $outfile
+    done
 done
-cp -r $dir/graphs $dir/graphs_full
+'
+
+outdir=results
+mkdir -p $outdir
+python evaluate.py testsets predictions $outdir
+
+
