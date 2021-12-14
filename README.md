@@ -45,6 +45,7 @@ lemma level:
 - binary change (sense loss or gain)
 - graded change 1 (divergence of word sense distribution)
 - graded change 2 (compare metric)
+- clustering evaluation (already implemented)
 
 usage level:
 - novel sense identification
@@ -109,3 +110,16 @@ BibTex
 
 ```
 ```
+
+
+#### TODO for Serge:
+
+- [ ] Clean Up existing code
+- [ ] Script for downloading all datasets
+- [ ] Implementing of [Tasks](#Tasks)
+- [ ] Cleaned Versions of Datasets
+- [ ] ...
+
+Notes:
+> What structure/functions do we need? 
+> Load Function, 
