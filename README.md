@@ -29,7 +29,7 @@ Benchmark for Lexical Semantic Change Detection.
 ##### TODO:
 
 Priority:
-- extraction of sense description labels is done more elegant in WSI-summer benchmark: semeeval_to_bts_rnc_convert.py
+- extraction of sense description labels is done more elegantly in WSI-summer benchmark: semeeval_to_bts_rnc_convert.py
 - use hydra or not?
 - implement three scenarios of use (see picture I sent)
 
