@@ -29,15 +29,15 @@ Benchmark for Lexical Semantic Change Detection.
 ##### TODO:
 
 Priority:
-- extraction of sense description labels is done more elegantly in WSI-summer benchmark: semeeval_to_bts_rnc_convert.py
-- use hydra or not?
-- implement three scenarios of use (see picture I sent)
+- [ ] extraction of sense description labels is done more elegantly in WSI-summer benchmark: semeeval_to_bts_rnc_convert.py
+- [ ] use hydra or not?
+- [ ] implement three scenarios of use (see picture I sent)
 
-- ===Standard Split===
-- Datasets should provide: dataset1/dev.data, dataset1/eval.data
-- All downloaded datasets should be converted to the same structure
-- converted data should be split into development set and training set
-- Include MCL-WiC, binary labels vs scaled labels
+- [ ] ===Standard Split===
+- [ ] Datasets should provide: dataset1/dev.data, dataset1/eval.data
+- [ ] All downloaded datasets should be converted to the same structure
+- [ ] converted data should be split into development set and training set
+- [ ] Include MCL-WiC, binary labels vs scaled labels
 
 #### Tasks
 
