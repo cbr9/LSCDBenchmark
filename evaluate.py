@@ -10,6 +10,7 @@ def sense_description_scorer(gold, pred):
     variable_names = list(gold[0].keys())
     variable_names.remove('identifier')
     for name in variable_names:
+        # to do: distinguish variable names (this is a bug)
         identifiers_gold = [row['identifier'] for row in gold]
         identifiers_pred = [row['identifier'] for row in pred]
         if set(identifiers_gold)!=set(identifiers_pred) or len(identifiers_gold)!=len(identifiers_pred) or len(identifiers_gold)!=len(set(identifiers_gold)):
