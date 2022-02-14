@@ -8,12 +8,12 @@ import argparse
 
 # command line arguments parsing
 parser = argparse.ArgumentParser()
-parser.add_argument("-g", "--gold", help = "gold data path",required=True)
-parser.add_argument("-p", "--predictions", help = "predictions data path",required=True)
-parser.add_argument("-f", "--filter", help = "filter label (e.g. kri_full) data path")
+parser.add_argument("-g", "--gold", help = "absolute path to the file containing gold data",required=True)
+parser.add_argument("-p", "--predictions", help = "absolute path to the file containg predictions",required=True)
+parser.add_argument("-f", "--filter", help = "filter label (e.g. kri_full)")
 parser.add_argument("-et", "--evaltype", help = "evaluation type e.g. change_binary",required=True)
-parser.add_argument("-o", "--out", help = "output folder path",required=True)
-parser.add_argument("-agr", "--agreement", help = "agreement statistics path")
+parser.add_argument("-o", "--out", help = "absolute path to the output folder",required=True)
+parser.add_argument("-agr", "--agreement", help = "absolute path to the file containing agreement statistics")
 
 args = parser.parse_args()
 gold_file = args.gold
