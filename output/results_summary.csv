@@ -1,0 +1,32 @@
+filter=kri_full	threshold=0.1
+EvaluationType=change_binary
+accuracy=1.0	f1_score=1.0	recall_score=1.0	precision=1.0	
+
+filter=kri_full	threshold=0.2
+EvaluationType=change_binary
+accuracy=1.0	f1_score=1.0	recall_score=1.0	precision=1.0	
+
+filter=kri2_full	threshold=0.1
+EvaluationType=change_binary
+accuracy=1.0	f1_score=1.0	recall_score=1.0	precision=1.0	
+
+filter=kri2_full	threshold=0.2
+EvaluationType=change_binary
+accuracy=1.0	f1_score=1.0	recall_score=1.0	precision=1.0	
+
+filter=kri_full	threshold=0.1
+EvaluationType=change_graded
+spearmanr=(correlation=1.0, pvalue=0.0)	
+
+filter=kri_full	threshold=0.2
+EvaluationType=change_graded
+spearmanr=(correlation=0.9999999999999999, pvalue=1.547064082022545e-275)	
+
+filter=kri2_full	threshold=0.1
+EvaluationType=change_graded
+spearmanr=(correlation=1.0, pvalue=0.0)	
+
+filter=kri2_full	threshold=0.2
+EvaluationType=change_graded
+spearmanr=(correlation=1.0, pvalue=0.0)	
+

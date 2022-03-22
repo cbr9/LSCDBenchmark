@@ -1,4 +1,4 @@
-import sys
+import sys, os
 import pandas as pd
 import csv
 from collections import defaultdict, Counter
@@ -61,7 +61,7 @@ for evaltype in evaltypes:
         exit()
     gold = golddata.get([evaltype])
     predictions = preddata.get([evaltype])
-    #print(len(gold),len(predictions))
+    print(len(gold),len(predictions))
 
 # scores computation
 

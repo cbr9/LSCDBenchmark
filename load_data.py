@@ -8,6 +8,7 @@ import argparse
 import os
 
 def load_data(data_path=None,lemma=None,preprocessing='context'):
+    #print('in load data')
     assert data_path != None, 'Data path is required'
 
     if lemma != None:
@@ -19,7 +20,7 @@ def load_data(data_path=None,lemma=None,preprocessing='context'):
     for lemma_dir in lemmas:
         csvfile = data_path + '/data/' + lemma_dir + '/uses.csv'
         df = pd.read_csv(csvfile,delimiter='\t',quoting=csv.QUOTE_NONE)
-        data.append(list(df.get(['lemma','identifier','date',preprocessing]).to_records(index=False)))
+        data.append(list(df.get(['lemma','identifier','date','grouping',preprocessing,'context_tokenized','indexes_target_token_tokenized','context_lemmatized']).to_records(index=False)))
 
     return(data)
 
@@ -29,4 +30,4 @@ if __name__ == "__main__":
     data = load_data(data_path='./usage-graph-data/dwug_en/',preprocessing='context_tokenized')
     #data = load_data(data_path='./usage-graph-data/dwug_en/',preprocessing='context_pos')
     #data = load_data(preprocessing='context_tokenized')
-    print(data)
+    #print(data)
