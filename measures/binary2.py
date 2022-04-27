@@ -1,3 +1,4 @@
+# the code is largely adopted from https://github.com/seinan9/LSCDiscovery/blob/main/measures/binary.py
 import csv
 import logging
 import time
@@ -7,11 +8,6 @@ import numpy as np
 
 def binary(path_targets,path_output):
     print(path_targets)
-    #path_distances = args['<path_distances>']
-    #path_targets = args['<path_targets>']
-    #path_output = args['<path_output>']
-    #path_targets = None
-    #t = float(args['<t>'])
     t = 0.1
 
     logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
@@ -23,7 +19,6 @@ def binary(path_targets,path_output):
     with open(path_targets, 'r', encoding='utf-8') as f:
         reader = csv.reader(f, delimiter='\t', quoting=csv.QUOTE_NONE, strict=True)
         for row in reader:
-            #print(row,'*'*50)
             try:
                 distances[row[0]] = float(row[1])
             except ValueError:
@@ -44,7 +39,7 @@ def binary(path_targets,path_output):
         for key in distances:
             if distances[key] >= threshold:
                 changing_words.append(key)
-        print(changing_words)
+        print(changing_words) # need to decide what to do here
 
         # Write changing words to <path_output>
         #with open(path_output, 'w', encoding='utf-8') as f:

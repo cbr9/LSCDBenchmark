@@ -1,0 +1,29 @@
+bert:
+  language: en
+  type_sentences: lemma
+  layers: 1+12
+  is_len: False
+  f2:
+  max_samples:
+  path_output1: ./output/vectors_xlmr_corpus1/
+  path_output2: ./output/vectors_xlmr_corpus2/
+  path_results: ./results/
+  path_targets: ./targets/
+
+xlmr:
+  language: en
+  type_sentences: lemma
+  layers: 1+12
+  is_len: False
+  f2:
+  max_samples:
+  path_output1: ./output/vectors_xlmr_corpus1/
+  path_output2: ./output/vectors_xlmr_corpus2/
+  path_results: ./results/
+  path_targets: ./targets/
+
+random:
+  language: en
+  path_targets: ./targets/
+  path_results: ./results/
+  is_rel: True

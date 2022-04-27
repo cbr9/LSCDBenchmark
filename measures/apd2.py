@@ -1,3 +1,4 @@
+# the code is largely adopted from https://github.com/seinan9/LSCDiscovery/blob/main/measures/apd.py
 import logging
 import random
 import sys
@@ -10,8 +11,6 @@ from scipy.spatial.distance import cosine as cosine_distance
 
 from utils_ import Space
 def apd(path_matrix1,path_matrix2):
-    #path_matrix1 = args['<path_matrix1>']
-    #path_matrix2 = args['<path_matrix2>']
 
     logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
     logging.info(__file__.upper())

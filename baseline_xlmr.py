@@ -15,15 +15,16 @@ from load_data import *
 from cos2 import *
 from binary2 import *
 from apd2 import *
-from bert2 import *
+from xlmr import *
+#from bert2 import *
 
-def bert_baseline():
-        # read configrations
+
+def xlmr_baseline():
+        # read configurations
         assert os.path.exists('baseline.yaml')
         with open("baseline.yaml", 'r') as config:
             configurations = yaml.safe_load(config)
-
-        config_dict = configurations['bert']
+        config_dict = configurations['xlmr']
         print(config_dict)
         language = config_dict['language']
         type_sentences = config_dict['type_sentences']
@@ -33,14 +34,14 @@ def bert_baseline():
         path_output2 = config_dict['path_output2']
         path_results = config_dict['path_results']
         target_words_path = config_dict['path_targets']
-
+        '''
         # target words
         target_words = [w.strip().split('_')[0] for w in open(target_words_path+'/target_words.txt').readlines()][:]
         uses_corpus1 = []
         uses_corpus2 = []
-        '''
-        distance_targets_apd = open(path_results+'/apd/distance_targets.tsv','w')
-        distance_targets_cos = open(path_results+'/cos/distance_targets.tsv','w')
+
+        distance_targets_apd = open(path_results+'/apd/distance_targets2.tsv','w')
+        distance_targets_cos = open(path_results+'/cos/distance_targets2.tsv','w')
 
         for target_word in target_words:
             print(target_word)
@@ -52,10 +53,10 @@ def bert_baseline():
                     uses_corpus1.append({'lemma':lemma.split('_')[0],'sentence_lemma':context_lemmatized,'index_lemma':indexes_target_token_tokenized,'index_token':indexes_target_token_tokenized,'sentence_token':context_tokenized})
                 elif grouping == 2:
                     uses_corpus2.append({'lemma':lemma.split('_')[0],'sentence_lemma':context_lemmatized,'index_lemma':indexes_target_token_tokenized,'index_token':indexes_target_token_tokenized,'sentence_token':context_tokenized})
-            # bert vectors
-            bert(uses_corpus1,target_word,language,type_sentences,layers,is_len,path_output1+target_word+'.tsv')
-            bert(uses_corpus2,target_word,language,type_sentences,layers,is_len,path_output2+target_word+'.tsv')
-            # compute apd and cos distances
+            # xlmr vectors
+            xlmr(uses_corpus1,target_word,language,type_sentences,layers,is_len,path_output1+target_word+'.tsv')
+            xlmr(uses_corpus2,target_word,language,type_sentences,layers,is_len,path_output2+target_word+'.tsv')
+            # apd and cos distances
             apd_distance = apd(path_output1+target_word+'.tsv',path_output2+target_word+'.tsv')
             distance_targets_apd.write(target_word+'\t'+str(apd_distance)+'\n')
             cos_distance = cos(path_output1+target_word+'.tsv',path_output2+target_word+'.tsv')
@@ -64,10 +65,10 @@ def bert_baseline():
         distance_targets_apd.close()
         distance_targets_cos.close()'''
         # binary classification
-        binary(path_results+'apd/distance_targets.tsv',path_results+'apd/scores_targets.tsv')
-        binary(path_results+'cos/distance_targets.tsv',path_results+'cos/scores_targets.tsv')
+        binary(path_results+'apd/distance_targets2.tsv',path_results+'apd/scores_targets2.tsv')
+        binary(path_results+'cos/distance_targets2.tsv',path_results+'cos/scores_targets2.tsv')
 
 
 
 if __name__ == "__main__":
-    bert_baseline()
+    xlmr_baseline()

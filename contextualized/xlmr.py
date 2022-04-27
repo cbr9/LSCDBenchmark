@@ -1,7 +1,7 @@
 # the code is largely adopted from https://github.com/seinan9/LSCDiscovery/tree/main/contextualized/bert.py
 import logging
 import torch
-from transformers import BertTokenizer, BertModel, AutoTokenizer, AutoModel
+from transformers import XLMTokenizer, XLMModel
 import time
 import os
 from docopt import docopt
@@ -10,7 +10,7 @@ from sklearn import preprocessing
 
 from utils_ import Space
 
-def bert(test_sentences,l,language,type_sentences,layers,is_len,path_output):
+def xlmr(test_sentences,l,language,type_sentences,layers,is_len,path_output):
     word = l.split('.')[0]
 
 
@@ -26,17 +26,18 @@ def bert(test_sentences,l,language,type_sentences,layers,is_len,path_output):
         'multi': 'bert-base-multilingual-cased'
         }
 
-    tokenizer = BertTokenizer.from_pretrained(model_language[language])
-    model = BertModel.from_pretrained(model_language[language], output_hidden_states=True)
+
+    tokenizer = XLMTokenizer.from_pretrained("xlm-mlm-en-2048")
+    model = XLMModel.from_pretrained("xlm-mlm-en-2048",output_hidden_states=True)
 
     if type_sentences == 'toklem':
         type_ = 'token'
     else:
         type_ = type_sentences
 
-
-    # Load sentences
     context_vector_list = []
+
+    # Create the vectors
     for i in range(0, len(test_sentences)):
             try:
                 # Create target word(s)
@@ -58,6 +59,8 @@ def bert(test_sentences,l,language,type_sentences,layers,is_len,path_output):
                     text = text.replace(target_word, original_word)
                 marked_text = "[CLS] " + text + " [SEP]"
                 tokenized_text = tokenizer.tokenize(marked_text)
+
+                #print(tokenized_text)
 
                 # Search the indices of the tokenized target word in the tokenized text
                 target_word_indices = []
@@ -83,15 +86,20 @@ def bert(test_sentences,l,language,type_sentences,layers,is_len,path_output):
                             for index, value in enumerate(target_word_indices):
                                 target_word_indices[index] -= 1
 
-                # Create BERT Token Embeddings
+                # Create XML Token Embeddings
                 indexed_tokens = tokenizer.convert_tokens_to_ids(tokenized_text)
                 segments_ids = [1] * len(tokenized_text)
                 tokens_tensor = torch.tensor([indexed_tokens])
                 segments_tensors = torch.tensor([segments_ids])
                 model.eval()
+
                 with torch.no_grad():
                     outputs = model(tokens_tensor, segments_tensors)
-                    hidden_states = outputs[2]
+                    #print(outputs.last_hidden_state)
+                    #print(outputs[1])
+                    hidden_states = outputs[1]
+
+                    #hidden_states = outputs.last_hidden_state
                 token_embeddings = torch.stack(hidden_states, dim=0)
                 token_embeddings = torch.squeeze(token_embeddings, dim=1)
                 token_embeddings = token_embeddings.permute(1, 0, 2)
@@ -106,7 +114,6 @@ def bert(test_sentences,l,language,type_sentences,layers,is_len,path_output):
                     vectors.append(np.array(sum_vec))
                 context_vector_list.append(np.sum(vectors, axis=0, dtype=float))
             except Exception as inst:
-                print(inst)
                 logging.info("SKIPPED SENTENCE "+str(i))
 
 
@@ -121,3 +128,4 @@ def bert(test_sentences,l,language,type_sentences,layers,is_len,path_output):
 
     logging.info("--- %s seconds ---" % (time.time() - start_time))
     print("")
+    
