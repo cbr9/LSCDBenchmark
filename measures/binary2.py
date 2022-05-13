@@ -26,7 +26,7 @@ def binary(path_targets,path_output):
                 pass
 
     # Compute mean, std and threshold
-    print(distances)
+    #print(distances)
     list_distances = np.array(list(distances.values()))
 
     mean = np.mean(list_distances, axis=0)

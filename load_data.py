@@ -7,7 +7,7 @@ from scipy import stats
 import argparse
 import os
 
-def load_data(data_path=None,lemma=None,preprocessing='context'):
+def load_data(data_path=None,lemma=None,preprocessing=None):
     #print('in load data')
     assert data_path != None, 'Data path is required'
 
@@ -19,7 +19,11 @@ def load_data(data_path=None,lemma=None,preprocessing='context'):
     data = []
     for lemma_dir in lemmas:
         csvfile = data_path + '/data/' + lemma_dir + '/uses.csv'
-        df = pd.read_csv(csvfile,delimiter='\t',quoting=csv.QUOTE_NONE)
+        df = pd.read_csv(csvfile,delimiter='\t',quoting=csv.QUOTE_NONE, encoding='utf-8')
+        #if preprocessing == None: # this is for a revised version of load_data after discussion with the benchmark ground in meeting 
+            #data.append(list(df.to_records(index=False)))
+        #else:
+            #data.append(list(df.get(['lemma','identifier','date','grouping','context,'context_'+preprocessing]).to_records(index=False)))
         data.append(list(df.get(['lemma','identifier','date','grouping',preprocessing,'context_tokenized','indexes_target_token_tokenized','context_lemmatized']).to_records(index=False)))
 
     return(data)
@@ -27,7 +31,7 @@ def load_data(data_path=None,lemma=None,preprocessing='context'):
 if __name__ == "__main__":
     #data = load_data(lemma='attack',data_path='./usage-graph-data/dwug_en/')
     #data = load_data(lemma='attack',data_path='./usage-graph-data/dwug_en/',preprocessing='context_tokenized')
-    data = load_data(data_path='./usage-graph-data/dwug_en/',preprocessing='context_tokenized')
+    data = load_data(data_path='./usage-graph-data/dwug_en/',preprocessing=None)
     #data = load_data(data_path='./usage-graph-data/dwug_en/',preprocessing='context_pos')
     #data = load_data(preprocessing='context_tokenized')
-    #print(data)
+    print(data[0])
