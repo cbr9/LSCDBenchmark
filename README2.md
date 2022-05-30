@@ -20,18 +20,19 @@
 
 ### 1. General
 
-A benchmark for Lexical Semantic Change Detection with the following three major components:
-  1. Data loading
-  2. Scoring
-  3. Baselines  
+A benchmark for Lexical Semantic Change Detection. It provides.
+  1. A data loading function
+  2. A scoring script
+  3. Baseline systems  
 
 ### 2. Data loading
+A function to load usage data for one or more lemmas from a given dataset path i.e.
 
 `load_data(data_path=None,lemma=None,preprocessing='lemmatized')`
 
 #### 2.1 Parameters:
   + data_path: Absolute path to the data directory
-  + lemma: The lemma for which usages are to be loaded from the data directory. If `None` all of the lemmas from the    `data_path` are loaded.
+  + lemma: The lemma for which usages are to be loaded from the data directory. If `None` usage data for all lemmas at the    `data_path` are loaded.
   + preprocessing: There are various preprocessed (e.g. lemmatized, tokenized) versions of the usages, this parameter selects a particular version and loads data accordingly.
 
 #### 2.2 Output:
@@ -42,15 +43,15 @@ A benchmark for Lexical Semantic Change Detection with the following three major
 ### 3. Scoring
 The script takes a number of command line arguments and a number of configurable parameters (a yaml file) to compute various evaluation metrics. The metrics are computed for all possible combinations of the values of `filter_label`, `filter_threshold` and `evaluation_type` parameters. These command line and configuration file parameters are briefly explained below.
 #### 3.1 Command-line arguments:
-+ `-p` Absolute path to a file containing predictions.
-+ `-g` Absolute path to a file containing gold.
++ `-p` Absolute path to the file containing predictions.
++ `-g` Absolute path to the file containing gold.
 + `-s`
-+ `-a` Absolute path to a file containing annotation agreement scores. These are to be used to filter the data before computing the evaluation metrics.
++ `-a` Absolute path to the file containing annotators agreement scores. These are to be used to filter the data before computing the evaluation metrics.
 + `-o` Absolute path to the directory where output is to be stored.
 
 #### 3.2 Configurable parameters (scorer.yaml):
 + `filter_label`
-If the data is to be filtered then this parameter contains the name of column on which filtering is to be applied (e.g. kri_full, kri2_full). Can be a single value or a list.
+If the data is to be filtered before the evaluation metrics are computed then this parameter contains the name of column on which filtering is to be applied (e.g. kri_full, kri2_full). Can be a single value or a list.
 + `filter_threshold`
 The threshold value for the above given `filter_lable`. Can be a single value or a list.  
 + `evaluation_type`
@@ -96,13 +97,21 @@ To be discussed: The ploting functionality in this function requires floating po
 
 
 ### 4. Baselines
+The benchmark provides a number of baselines systems for baseline evaluations. There is a separate script for each of the baselines, and is placed inside the `LSCDBenchmark/baselines/` directory.
+
+Each of the baseline system requires a number of configurable parameters. The configuration file is called baseline.yaml and is placed inside (`LSCDBenchmark/config/`) directory. A brief description of those parameters is given below in the following subsections.
+
+At this stage, the baselines are adapted to the 'DWUG' datasets, and the systems expect a directory called `usage-graph-data` inside the `LSCDBenchmark` directory containing the datasets. It also means that the `usage-graph-data` directory has a directory (e.g. `dwug_en` for English) containing DWUG dataset of the language for which the baseline is to be run (the language parameter in the `baseline.yaml`). Running any of the baselines systems from command line (e.g. `python3 baseline_bert.py`) extract a list of target words from the data directory (e.g. `dwug_en/data/`) and compute the baseline results. The results will be stored inside the `LSCDBenchmark/results/` directory. For `bert` and `xlmr` baseline systems, two types of scores are computed and are stored inside the `LSCDBenchmark/results/cos/` and `LSCDBenchmark/results/apd/`. These results correspond to the cosine similarity and average pair-wise distance between the vectors of a given target word from two time spans. The results of random and majority baseline systems are stored in `LSCDBenchmark/results/rand/` and `LSCDBenchmark/results/majority/` directories respectively. 
+
+
+
 #### 4.1 Configuration File (baseline.yaml)
-A number of configuration parameters are given in the baseline.yaml file. A list and brief description of baseline dependent parameters is given in the following subsections.  
+
 #### 4.2 Bert-Baseline
 ##### 4.2.1 Configuration parameters:
 
 + language: The language code (e.g. 'en', 'sv'). The code is used to load data and save results in files with a trailing language code in the file names.
-+ type_sentences: i.e. lemma
++ type_sentences: The preprocessing type (either 'lemma' or 'toklem'). In case of 'lemma' the lemmatized version of the context sentence is used before computing the embeddins, while in the case of 'toklem' the tokenized version of the context and lemmatized version of the target word is used.  
 + layers: e.g. 1+12
 + is_len: e.g. False
 + f2:
@@ -126,7 +135,7 @@ A number of configuration parameters are given in the baseline.yaml file. A list
 + path_results: Path to the diretor where results are to be stored (e.g. `./results/`)
 + path_targets: Path to the directory where target words are to be found (e.g. `./targets/`)
 
-Based on the above listed parameters, the script loads usages (from two different time-spans) of a list of target words using the load_data function, computes their bert/xlm vectors, compute cos/apd distances between vectors from two time spans. The distances then are converted to binary labels using a threshold.     
+Based on the above listed parameters, the script loads usages (from two different time-spans) of a list of target words using the load_data function, computes their bert/xlm vectors, compute cos/apd distances between vectors from two time spans. The distances then are converted to binary labels using a threshold. The final results are stored at the path_results as mentioned previously.      
 
 #### 4.4 Random-Baseline
 ##### 4.4.1 Configuration parameters:

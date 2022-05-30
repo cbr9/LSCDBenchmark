@@ -22,6 +22,7 @@ def random_baseline():
         is_rel = config_dict['is_rel']
         path_results = config_dict['path_results']
         target_words_path = config_dict['path_targets']
+        language = config_dict['language']
 
         # target words
         # a hack to produce a target_words lists, standard is to have a list of words at 'target_words_path' as is the case for English

@@ -35,7 +35,7 @@ def majority_baseline():
         data['lemma'] = data['lemma'].str.replace('_(\w+)','',regex=True) # remove trailing pos tag with target words
 
         # random scores
-        majority(target_words,data,path_results+'majority/scores_targets.tsv')
+        majority(target_words,data,path_results+'majority/scores_targets_'+language+'.tsv')
 
         # binary classification
         #binary(path_results+'rand/random_scores_targets.tsv',path_results+'rand/scores_targets.tsv')
