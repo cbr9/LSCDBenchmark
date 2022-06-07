@@ -4,8 +4,8 @@ import logging
 import sys, os
 import yaml
 import pandas as pd
-sys.path.append('./modules')
-sys.path.append('./measures/')
+sys.path.append('../modules')
+sys.path.append('../measures/')
 
 from binary2 import *
 from majority import *
@@ -14,8 +14,8 @@ from majority import *
 
 def majority_baseline():
         # read configurations
-        assert os.path.exists('baseline.yaml')
-        with open("baseline.yaml", 'r') as config:
+        assert os.path.exists('../config/baseline.yaml')
+        with open("../config/baseline.yaml", 'r') as config:
             configurations = yaml.safe_load(config)
         config_dict = configurations['majority']
         print(config_dict)
@@ -27,7 +27,7 @@ def majority_baseline():
 
         # target words
         # a hack to produce a target_words lists, standard is to have a list of words at 'target_words_path' as is the case for English
-        target_words = os.listdir('./usage-graph-data/dwug_'+language+'/data/')
+        target_words = os.listdir('../usage-graph-data/dwug_'+language+'/data/')
 
         #target_words = [w.strip().split('_')[0] for w in open(target_words_path+'/target_words.txt').readlines()][:]
 

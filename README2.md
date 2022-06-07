@@ -97,7 +97,9 @@ To be discussed: The ploting functionality in this function requires floating po
 
 
 ### 4. Baselines
-The benchmark provides a number of baselines systems for baseline evaluations. There is a separate script for each of the baselines, and is placed inside the `LSCDBenchmark/baselines/` directory.
+The benchmark provides a number of baselines systems for baseline evaluations. There is a separate script for each of the baselines, and is placed inside the `LSCDBenchmark/baselines/` directory. Any of the baseline scripts can be run form command line e.g.
+
+`>>> python3 baseline_majority.py`
 
 Each of the baseline system requires a number of configurable parameters. The configuration file is called baseline.yaml and is placed inside (`LSCDBenchmark/config/`) directory. A brief description of those parameters is given in the following subsections.
 

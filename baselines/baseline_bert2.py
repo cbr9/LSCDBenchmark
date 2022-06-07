@@ -4,10 +4,10 @@ import gzip
 import logging
 import sys
 import yaml
-sys.path.append('./modules')
-sys.path.append('./measures/')
-sys.path.append('./contextualized/')
-sys.path.append('./plots/')
+sys.path.append('../modules')
+sys.path.append('../measures/')
+sys.path.append('../contextualized/')
+sys.path.append('../plots/')
 
 import numpy as np
 import random
@@ -21,8 +21,8 @@ from bert2 import *
 
 def bert_baseline():
         # read configrations
-        assert os.path.exists('baseline.yaml')
-        with open("baseline.yaml", 'r') as config:
+        assert os.path.exists('../config/baseline.yaml')
+        with open("../config/baseline.yaml", 'r') as config:
             configurations = yaml.safe_load(config)
 
         config_dict = configurations['bert']
@@ -38,7 +38,7 @@ def bert_baseline():
 
         # target words
         # a hack to produce a target_words lists, standard is to have a list of words at 'target_words_path' as is the case for English
-        target_words = os.listdir('./usage-graph-data/dwug_'+language+'/data/')
+        target_words = os.listdir('../usage-graph-data/dwug_'+language+'/data/')
         #target_words_f = open(target_words_path+'/target_words.txt').readlines()
         #if target_words_f != []:
         #    target_words = [w.strip().split('_')[0] for w in target_words_f][:]
@@ -54,7 +54,7 @@ def bert_baseline():
         for target_word in target_words:
             print(target_word)
             # load data using the benchmark load_data funciton
-            data = load_data(data_path='./usage-graph-data/dwug_'+language+'/',preprocessing='context',lemma=target_word)
+            data = load_data(data_path='../usage-graph-data/dwug_'+language+'/',preprocessing='context',lemma=target_word)
             if data == None or data ==  []:
                     print('Usage dataset for the target word is empty')
                     exit()

@@ -3,9 +3,9 @@ import gzip
 import logging
 import sys
 import yaml
-sys.path.append('./modules')
-sys.path.append('./measures/')
-sys.path.append('./contextualized/')
+sys.path.append('../modules')
+sys.path.append('../measures/')
+sys.path.append('../contextualized/')
 
 import numpy as np
 import random
@@ -21,8 +21,8 @@ from xlmr import *
 
 def xlmr_baseline():
         # read configurations
-        assert os.path.exists('baseline.yaml')
-        with open("baseline.yaml", 'r') as config:
+        assert os.path.exists('../config/baseline.yaml')
+        with open("../config/baseline.yaml", 'r') as config:
             configurations = yaml.safe_load(config)
         config_dict = configurations['xlmr']
         print(config_dict)
@@ -37,8 +37,8 @@ def xlmr_baseline():
 
         # target words
         # a hack to produce a target_words lists, standard is to have a list of words at 'target_words_path' as is the case for English
-        #target_words = os.listdir('./usage-graph-data/dwug_'+language+'/data/')
-        target_words = [w.strip().split('_')[0] for w in open(target_words_path+'/target_words.txt').readlines()][:]
+        target_words = os.listdir('../usage-graph-data/dwug_'+language+'/data/')
+        #target_words = [w.strip().split('_')[0] for w in open(target_words_path+'/target_words.txt').readlines()][:]
         uses_corpus1 = []
         uses_corpus2 = []
 
@@ -48,7 +48,7 @@ def xlmr_baseline():
         for target_word in target_words:
             print(target_word)
             # load data using the benchmark load_data funciton
-            data = load_data(data_path='./usage-graph-data/dwug_'+language+'/',preprocessing='context',lemma=target_word)
+            data = load_data(data_path='../usage-graph-data/dwug_'+language+'/',preprocessing='context',lemma=target_word)
             # create two usage corpus sets
             for (lemma,identifier,date,grouping,preprocessing,context_tokenized,indexes_target_token_tokenized,context_lemmatized) in data[0]:
                 if grouping == 1:
