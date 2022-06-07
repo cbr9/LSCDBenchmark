@@ -99,9 +99,9 @@ To be discussed: The ploting functionality in this function requires floating po
 ### 4. Baselines
 The benchmark provides a number of baselines systems for baseline evaluations. There is a separate script for each of the baselines, and is placed inside the `LSCDBenchmark/baselines/` directory.
 
-Each of the baseline system requires a number of configurable parameters. The configuration file is called baseline.yaml and is placed inside (`LSCDBenchmark/config/`) directory. A brief description of those parameters is given below in the following subsections.
+Each of the baseline system requires a number of configurable parameters. The configuration file is called baseline.yaml and is placed inside (`LSCDBenchmark/config/`) directory. A brief description of those parameters is given in the following subsections.
 
-At this stage, the baselines are adapted to the 'DWUG' datasets, and the systems expect a directory called `usage-graph-data` inside the `LSCDBenchmark` directory containing the datasets. It also means that the `usage-graph-data` directory has a directory (e.g. `dwug_en` for English) containing DWUG dataset of the language for which the baseline is to be run (the language parameter in the `baseline.yaml`). Running any of the baselines systems from command line (e.g. `python3 baseline_bert.py`) extract a list of target words from the data directory (e.g. `dwug_en/data/`) and compute the baseline results. The results will be stored inside the `LSCDBenchmark/results/` directory. For `bert` and `xlmr` baseline systems, two types of scores are computed and are stored inside the `LSCDBenchmark/results/cos/` and `LSCDBenchmark/results/apd/`. These results correspond to the cosine similarity and average pair-wise distance between the vectors of a given target word from two time spans. The results of random and majority baseline systems are stored in `LSCDBenchmark/results/rand/` and `LSCDBenchmark/results/majority/` directories respectively. 
+At this stage, the baselines are adapted to the 'DWUG' datasets, and the systems expect a directory called `usage-graph-data` inside the `LSCDBenchmark` directory containing the datasets. It also means that the `usage-graph-data` directory has a directory (e.g. `dwug_en` for English) containing DWUG dataset of the language for which the baseline is to be run (the language parameter in the `baseline.yaml`). Running any of the baselines systems from command line (e.g. `python3 baseline_bert.py`) extract a list of target words from the data directory (e.g. `dwug_en/data/`) and compute the baseline results. The results will be stored inside the `LSCDBenchmark/results/` directory. For `bert` and `xlmr` baseline systems, two types of scores are computed and are stored inside the `LSCDBenchmark/results/cos/` and `LSCDBenchmark/results/apd/`. These results correspond to the cosine similarity and average pair-wise distance between the vectors of a given target word from two time spans. The results of random and majority baseline systems are stored in `LSCDBenchmark/results/rand/` and `LSCDBenchmark/results/majority/` directories respectively.
 
 
 
@@ -116,8 +116,8 @@ At this stage, the baselines are adapted to the 'DWUG' datasets, and the systems
 + is_len: e.g. False
 + f2:
 + max_samples:
-+ path_output1: Path to the dirctory where the bert vectors for corpus1 are to be stored (e.g. `./output/vectors_xlmr_corpus1/` )
-+ path_output2: Path to the dirctory where the bert vectors for corpus2 are to be stored (e.g. `./output/vectors_xlmr_corpus2/``
++ path_output1: Path to the dirctory where the bert vectors for corpus1 are to be stored (e.g. `./output/vectors_bert_corpus1/` )
++ path_output2: Path to the dirctory where the bert vectors for corpus2 are to be stored (e.g. `./output/vectors_bert_corpus2/``
 + path_results: Path to the diretor where results are to be stored (e.g. `./results/`)
 + path_targets: Path to the directory where target words are to be found (e.g. `./targets/`)
 
