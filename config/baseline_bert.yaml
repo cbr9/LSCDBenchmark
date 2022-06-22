@@ -1,5 +1,5 @@
 bert:
-  language: de
+  language: en
   type_sentences: toklem
   layers: 1+12
   is_len: False

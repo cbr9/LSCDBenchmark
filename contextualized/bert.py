@@ -34,7 +34,7 @@ def bert(test_sentences,l,language,type_sentences,layers,is_len,path_output):
     else:
         type_ = type_sentences
 
-    print(len(test_sentences))
+    #print(len(test_sentences))
     # Load sentences
     context_vector_list = []
     for i in range(0, len(test_sentences)):

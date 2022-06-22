@@ -23,7 +23,7 @@ from bert import *
 def bert_baseline():
         # read configrations
         assert os.path.exists('../config/baseline_bert.yaml')
-        with open("../config/baseline.yaml", 'r') as config:
+        with open("../config/baseline_bert.yaml", 'r') as config:
             configurations = yaml.safe_load(config)
 
         config_dict = configurations['bert']
@@ -40,7 +40,8 @@ def bert_baseline():
         # target words
         # a hack to produce a target_words lists, standard is to have a list of words at 'target_words_path' as is the case for English
         #target_words = os.listdir('../usage-graph-data/dwug_'+language+'/data/')
-        target_words_f = open(target_words_path+'/target_words'+language+'.txt').readlines()
+        assert os.path.exists(target_words_path+'target_words_'+language+'.txt')
+        target_words_f = open(target_words_path+'target_words_'+language+'.txt').readlines()
         if target_words_f != []:
             target_words = [w.strip().split('_')[0] for w in target_words_f][:]
         else:

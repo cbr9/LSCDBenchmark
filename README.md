@@ -18,38 +18,38 @@
   * [BibTex](#bibtex)
 
 
-### 1. General
+# 1. General
 
 A benchmark for Lexical Semantic Change Detection. It provides.
   1. A data loading function
   2. A scoring script
   3. Baseline systems  
 
-### 2. Data loading
+# 2. Data loading
 A function to load usage data for one or more lemmas from a given dataset path i.e.
 
 `load_data(data_path=None,lemma=None,preprocessing='lemmatized')`
 
-#### 2.1 Parameters:
+## 2.1 Parameters:
   + data_path: Absolute path to the data directory
   + lemma: The lemma for which usages are to be loaded from the data directory. If `None` usage data for all lemmas at the    `data_path` are loaded.
   + preprocessing: There are various preprocessed (e.g. lemmatized, tokenized) versions of the usages, this parameter selects a particular version and loads data accordingly.
 
-#### 2.2 Output:
+## 2.2 Output:
   The function returns a list of tuples. Each item in the list corresponds to one data point (i.e. word usage) and has the following values:
 
   - `(lemma,identifier,date,grouping,preprocessing,context_tokenized,indexes_target_token_tokenized,context_lemmatized)`
 
-### 3. Scoring
+# 3. Scoring
 The script takes a number of command line arguments and a number of configurable parameters (a yaml file) to compute various evaluation metrics. The metrics are computed for all possible combinations of the values of `filter_label`, `filter_threshold` and `evaluation_type` parameters. These command line and configuration file parameters are briefly explained below.
-#### 3.1 Command-line arguments:
+## 3.1 Command-line arguments:
 + `-p` Absolute path to the file containing predictions.
 + `-g` Absolute path to the file containing gold.
 + `-s`
 + `-a` Absolute path to the file containing annotators agreement scores. These are to be used to filter the data before computing the evaluation metrics.
 + `-o` Absolute path to the directory where output is to be stored.
 
-#### 3.2 Configurable parameters (scorer.yaml):
+## 3.2 Configurable parameters (scorer.yaml):
 + `filter_label`
 If the data is to be filtered before the evaluation metrics are computed then this parameter contains the name of column on which filtering is to be applied (e.g. kri_full, kri2_full). Can be a single value or a list.
 + `filter_threshold`
@@ -74,12 +74,12 @@ plot: 'False'
 
 ```
 
-#### 3.3 How to run it:
+## 3.3 How to run it:
 An example run is as:
 
 `python3 scorer.py -g './usage-graph-data/dwug_en/stats/opt/stats_groupings.csv' -p './results/apd/scores_targets.tsv' -s './results/apd/distance_targets.tsv' -agr './usage-graph-data/dwug_en/stats/stats_agreement.csv' -o './output'`
 
-#### 3.4 Output
+## 3.4 Output
 The evaluation results are stored in `results.csv` file at the output path mentioned with the `-o` parameter. An example run output with the above mentioned configuration file is given below:
 
 | evaluation_type |	filter |	threshold |	 spearmanr_correlation |	spearmanr_pvalue |	f1 |	accuracy | precision |	recall |
@@ -90,37 +90,36 @@ The evaluation results are stored in `results.csv` file at the output path menti
 |change_binary|	kri2_full|	0.2|	--|	--|	0.43|	0.41|	0.3|	0.71|
 
 
-#### 3.5 Plotting:
+## 3.5 Plotting:
 To be discussed: The ploting functionality in this function requires floating point distances while the gold and prediction data is in binary formate. At the moment i am loading the scoring files, and then extracting scores for the predicted data to be passed to the ploting function, is this what we want?  
-#### 3.6 Example Usage:
+## 3.6 Example Usage:
 
 
 
-### 4. Baselines
+# 4. Baselines
 
-## 4.1 Quick Start
-1. Download (and unzip) or clone the repository.
-2. Go into the  `/LSCDBenchmark/baselines/` directory.
-2. Make sure the required libraries are installed (requirements.txt).
-3. Make adjustments in the configuration file (see [Section 4.2](#4.2-configuration-files) for details on various configuration parameters) for the baseline system that you are interested to run.
-4. Create a directory called `usage-graph-data` inside the 'LSCDBenchmark' directory and download <a href=https://www.ims.uni-stuttgart.de/en/research/resources/experiment-data/wugs/> dwug dataset</a> for the language that you are interested in.
-5. Create a file named `target_words.txt` which contains the list of target words (one word per line) and put it at the path mentioned in the `path_targets` configuration parameter.  
-6. Run the baseline script (e.g. `>>> python3 baseline_majority.py.`).
-7. The results will be stored at the    `path_results`given in the configuration file.     
-
-## General
+## 4.1 General
 The benchmark provides a number of baselines systems for baseline evaluations. There is a separate script for each of the baselines, and is placed inside the `LSCDBenchmark/baselines/` directory. Any of the baseline scripts can be run form command line e.g.
 
 `>>> python3 baseline_majority.py`
 
 Each of the baseline system requires a number of configurable parameters. There is a separate configuration file each systems and is placed inside (`LSCDBenchmark/config/`) directory. A brief description of those parameters is given in [Section 4.2](#4.2-configuration-files)
 
-At this stage, the baselines are adapted to the 'DWUG' datasets, and the systems expect a directory called `usage-graph-data` inside the `LSCDBenchmark` directory containing the datasets. It also means that the `usage-graph-data` directory has a directory (e.g. `dwug_en` for English) containing DWUG dataset of the language for which the baseline is to be run (the language parameter in the `baseline.yaml`). Running any of the baselines systems from command line (e.g. `python3 baseline_bert.py`) extract a list of target words from the data directory (e.g. `dwug_en/data/`) and compute the baseline results. The results will be stored inside the `LSCDBenchmark/results/` directory. For `bert` and `xlmr` baseline systems, two types of scores are computed and are stored inside the `LSCDBenchmark/results/cos/` and `LSCDBenchmark/results/apd/`. These results correspond to the cosine similarity and average pair-wise distance between the vectors of a given target word from two time spans. The results of random and majority baseline systems are stored in `LSCDBenchmark/results/rand/` and `LSCDBenchmark/results/majority/` directories respectively.
+At this stage, the baselines are adapted to the 'DWUG' datasets, and the systems expect a directory called `usage-graph-data` inside the `LSCDBenchmark` directory containing the datasets. It also means that the `usage-graph-data` directory has a directory (e.g. `dwug_en` for English) containing DWUG dataset of the language for which the baseline is to be run. Running any of the baselines systems from command line (e.g. `python3 baseline_bert.py`) will compute the results and store them at the path given in the `path_results` parameter in the configuration file. For `bert` and `xlmr` baseline systems, two types of scores are computed and are stored inside the `/cos/` and `/apd/` within the `path_results` directory. These results correspond to the cosine similarity and average pair-wise distance between the vectors of a given target word from two time spans. The results of random and majority baseline systems are stored in `rand/` and `/majority/` directories respectively within the `path_results` directory.
 
+## 4.2 Quick Start
+1. Download (and unzip) or clone the repository.
+2. Go into the  `/LSCDBenchmark/baselines/` directory.
+2. Make sure the required libraries are installed (requirements.txt).
+3. Make adjustments in the configuration file (see [Section 4.3](#4.3-configuration-files) for details on various configuration parameters) for the baseline system that you are interested to run.
+4. Create a directory called `usage-graph-data` inside the 'LSCDBenchmark' directory and download <a href=https://www.ims.uni-stuttgart.de/en/research/resources/experiment-data/wugs/> dwug dataset</a> for the language that you are interested in.
+5. Create a file named `target_words.txt` which contains the list of target words (one word per line) and put it at the path mentioned in the `path_targets` configuration parameter.  
+6. Run the baseline script (e.g. `>>> python3 baseline_majority.py.`).
+7. The results will be stored at the    `path_results`given in the configuration file.  
 
-#### 4.2 Configuration Files
+### 4.3 Configuration Files
 
-#### 4.2.1 Bert-Baseline
+#### 4.3.1 Bert-Baseline
 
 + language: The language code (e.g. 'en', 'sv'). The code is used to load data and save results in files with a trailing language code in the file names.
 + type_sentences: The preprocessing type (either 'lemma' or 'toklem'). In case of 'lemma' the lemmatized version of the context sentence is used before computing the embeddins, while in the case of 'toklem' the tokenized version of the context and lemmatized version of the target word is used.  
@@ -133,7 +132,7 @@ At this stage, the baselines are adapted to the 'DWUG' datasets, and the systems
 + path_results: Path to the diretor where results are to be stored (e.g. `./results/`)
 + path_targets: Path to the directory where target words are to be found (e.g. `./targets/`)
 
-#### 4.2.2 XMLR-Baseline
+#### 4.3.2 XMLR-Baseline
 
 + language: The language code (e.g. 'en', 'sv')
 + type_sentences: i.e. lemma
@@ -148,14 +147,14 @@ At this stage, the baselines are adapted to the 'DWUG' datasets, and the systems
 
 Based on the above listed parameters, the script loads usages (from two different time-spans) of a list of target words using the load_data function, computes their bert/xlm vectors, compute cos/apd distances between vectors from two time spans. The distances then are converted to binary labels using a threshold. The final results are stored at the `path_results`.
 
-#### 4.2.3 Random-Baseline
+#### 4.3.3 Random-Baseline
 
 + language: The language code (e.g. 'en', 'sv')
 + path_results: Path to the diretor where results are to be stored (e.g. `./results/`)
 + path_targets: Path to the directory whrer target words are to be found (e.g. `./targets/`)
 + is_rel:
 
-#### 4.2.4 Majority Calass Baseline
+#### 4.3.4 Majority Calass Baseline
 
 + language: The language code (e.g. 'en', 'sv')
 + path_results: Path to the diretor where results are to be stored (e.g. `./results/`)

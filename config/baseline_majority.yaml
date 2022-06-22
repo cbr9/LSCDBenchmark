@@ -1,0 +1,5 @@
+majority:
+  language: en
+  path_targets: ../targets/
+  path_results: ../results/
+  path_data: ../usage-graph-data/

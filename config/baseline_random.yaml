@@ -1,0 +1,5 @@
+random:
+  language: en
+  path_targets: ../targets/
+  path_results: ../results/
+  is_rel: True
