@@ -1,7 +1,8 @@
+# the code is largely adopted from https://github.com/seinan9/LSCDiscovery/blob/main/measures/apd.py
 import logging
 import random
 import sys
-sys.path.append('/Users/xvirsh/shafqat/postDoc-Swe/project2022/LSCDiscovery-main/modules')
+sys.path.append('./modules')
 import time
 
 from docopt import docopt
@@ -9,23 +10,21 @@ import numpy as np
 from scipy.spatial.distance import cosine as cosine_distance
 
 from utils_ import Space
-def apd(space1,space2):
-    #path_matrix1 = args['<path_matrix1>']
-    #path_matrix2 = args['<path_matrix2>']
+def apd(path_matrix1,path_matrix2):
 
     logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
     logging.info(__file__.upper())
     start_time = time.time()
 
     # Load matrices
-    #try:
-    #    space1 = Space(path_matrix1, format='npz')
-    #except ValueError:
-    #    space1 = Space(path_matrix1, format='w2v')
-    #try:
-    #    space2 = Space(path_matrix2, format='npz')
-    #except ValueError:
-    #    space2 = Space(path_matrix2, format='w2v')
+    try:
+        space1 = Space(path_matrix1, format='npz')
+    except ValueError:
+        space1 = Space(path_matrix1, format='w2v')
+    try:
+        space2 = Space(path_matrix2, format='npz')
+    except ValueError:
+        space2 = Space(path_matrix2, format='w2v')
 
     vectors1 = space1.matrix.toarray()
     vectors2 = space2.matrix.toarray()

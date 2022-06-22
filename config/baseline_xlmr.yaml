@@ -1,0 +1,9 @@
+xlmr:
+  language: de
+  type_sentences: lemma
+  layers: 1+12
+  is_len: False
+  path_output1: ../output/vectors_xlmr_corpus1/
+  path_output2: ../output/vectors_xlmr_corpus2/
+  path_results: ../results/
+  path_targets: ../targets/

@@ -1,3 +1,4 @@
+# the code is largely adopted from https://github.com/seinan9/LSCDiscovery/tree/main/contextualized/bert.py
 import logging
 import torch
 from transformers import BertTokenizer, BertModel, AutoTokenizer, AutoModel
@@ -9,16 +10,9 @@ from sklearn import preprocessing
 
 from utils_ import Space
 
-def bert(test_sentences,l,language,type_sentences,layers,is_len):
+def bert(test_sentences,l,language,type_sentences,layers,is_len,path_output):
     word = l.split('.')[0]
-    #path_usages = args['<path_usages>']
-    #path_output = args['<path_output>']
-    #language = args['<language>']
-    #type_sentences = args['<type_sentences>']
-    #layers = args['<layers>']
 
-    #is_len = args['--len']
-    #path_usages = '/Users/xvirsh/shafqat/postDoc-Swe/project2022/LSCDiscovery-main/data/test_data/samples/test_sample/' + path_usages + l
 
     logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
     logging.info(__file__.upper())
@@ -26,10 +20,10 @@ def bert(test_sentences,l,language,type_sentences,layers,is_len):
 
     # Load pre-trained model tokenizer (vocabulary) and model (weights)
     model_language = {
-        'en': 'bert-base-cased',
+        'en': 'bert-base-uncased',
         'de': 'bert-base-german-cased',
-        'sw': 'KB/bert-base-swedish-cased',
-        'multi': 'bert-base-multilingual-cased'
+        'sv': 'KB/bert-base-swedish-cased',
+        'multi': 'bert-base-multilingual-uncased'
         }
 
     tokenizer = BertTokenizer.from_pretrained(model_language[language])
@@ -40,17 +34,9 @@ def bert(test_sentences,l,language,type_sentences,layers,is_len):
     else:
         type_ = type_sentences
 
-
+    print(len(test_sentences))
     # Load sentences
     context_vector_list = []
-    #test_sentences = []
-    #with open(path_usages, 'r') as csvFile:
-    #    reader = csv.DictReader(csvFile, delimiter="\t", quoting=csv.QUOTE_NONE, strict=True)
-    #    for row in reader:
-            #test_sentences.append(dict(row))
-    #print(test_sentences)
-
-        # Create the vectors
     for i in range(0, len(test_sentences)):
             try:
                 # Create target word(s)
@@ -73,6 +59,7 @@ def bert(test_sentences,l,language,type_sentences,layers,is_len):
                 marked_text = "[CLS] " + text + " [SEP]"
                 tokenized_text = tokenizer.tokenize(marked_text)
 
+
                 # Search the indices of the tokenized target word in the tokenized text
                 target_word_indices = []
                 for j in range(0, len(tokenized_text)):
@@ -83,6 +70,7 @@ def bert(test_sentences,l,language,type_sentences,layers,is_len):
                             if len(target_word_indices) == len(target_words):
                                 break
 
+                #print(target_word_indices)
                 if len(target_word_indices) == 0:
                     logging.info("INDICES NOT FOUND. SKIPPED SENTENCE "+str(i))
                     continue
@@ -98,9 +86,11 @@ def bert(test_sentences,l,language,type_sentences,layers,is_len):
                                 target_word_indices[index] -= 1
 
                 # Create BERT Token Embeddings
+
                 indexed_tokens = tokenizer.convert_tokens_to_ids(tokenized_text)
                 segments_ids = [1] * len(tokenized_text)
                 tokens_tensor = torch.tensor([indexed_tokens])
+
                 segments_tensors = torch.tensor([segments_ids])
                 model.eval()
                 with torch.no_grad():
@@ -128,12 +118,9 @@ def bert(test_sentences,l,language,type_sentences,layers,is_len):
     if is_len == 'True':
         context_vector_list = preprocessing.normalize(context_vector_list, norm='l2')
 
-    #print('vectors',context_vector_list)
     # Save contextVectorList_sparse matrix
     outSpace = Space(matrix=context_vector_list, rows=" ", columns=" ")
-    #outSpace.save(path_output)
+    outSpace.save(path_output)
 
     logging.info("--- %s seconds ---" % (time.time() - start_time))
     print("")
-    #print(l)
-    return(word,outSpace)

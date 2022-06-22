@@ -37,15 +37,21 @@ def xlmr_baseline():
 
         # target words
         # a hack to produce a target_words lists, standard is to have a list of words at 'target_words_path' as is the case for English
-        target_words = os.listdir('../usage-graph-data/dwug_'+language+'/data/')
-        #target_words = [w.strip().split('_')[0] for w in open(target_words_path+'/target_words.txt').readlines()][:]
-        uses_corpus1 = []
-        uses_corpus2 = []
+        #target_words = os.listdir('../usage-graph-data/dwug_'+language+'/data/')
+        target_words = [w.strip().split('_')[0] for w in open(target_words_path+'/target_words.txt').readlines()][:]
+        if target_words_f != []:
+            target_words = [w.strip().split('_')[0] for w in target_words_f][:]
+        else:
+            print('Target word list is empty')
+            exit()
+
 
         distance_targets_apd = open(path_results+'/apd/distance_targets_xlm_'+language+'_'+type_sentences+'.tsv','w',encoding='utf-8')
         distance_targets_cos = open(path_results+'/cos/distance_targets_xlm_'+language+'_'+type_sentences+'.tsv','w',encoding='utf-8')
 
         for target_word in target_words:
+            uses_corpus1 = []
+            uses_corpus2 = []
             print(target_word)
             # load data using the benchmark load_data funciton
             data = load_data(data_path='../usage-graph-data/dwug_'+language+'/',preprocessing='context',lemma=target_word)
